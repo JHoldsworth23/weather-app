@@ -1,6 +1,7 @@
-// get a latitude and longitude of the location
+const input = document.querySelector('input');
+const search = document.querySelector('button');
+
 const APIKEY = "b27c46842b98db969dffe3b1226f126f";
-let location = "Rome";
 
 async function getCurrentWeatherData(lat, lon) {
     const response = await fetch(
@@ -11,7 +12,7 @@ async function getCurrentWeatherData(lat, lon) {
     console.log(weatherData);
 }
 
-async function getCoordinates() {
+async function getCoordinates(location) {
     const response = await fetch(
         `http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${APIKEY}`, 
         {mode: 'cors'}
@@ -22,5 +23,7 @@ async function getCoordinates() {
     getCurrentWeatherData(lat, lon);
 }
 
-getCoordinates()
-  .catch((err) => console.error('Error:', err));
+search.addEventListener('click', () => {
+    getCoordinates(input.value)
+        .catch((err) => console.error('Error:', err));
+});
