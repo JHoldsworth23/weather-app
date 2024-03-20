@@ -2,6 +2,7 @@ const input = document.querySelector('input');
 const search = document.querySelector('form button');
 
 const APIKEY = "b27c46842b98db969dffe3b1226f126f";
+let twelveHours = false;
 // Needs to make it env for this API Key
 
 function convertLocalTime(timezone) {
@@ -9,6 +10,21 @@ function convertLocalTime(timezone) {
     const hours = '0' + (date.getHours() + timezone / 3600) % 24;
     const minutes = '0' + date.getMinutes();
     return `${hours.slice(-2)}:${minutes.slice(-2)}`;
+}
+
+function changeTimeFormat(timeString) {
+    twelveHours = !twelveHours;
+    if (twelveHours) {
+        const [hourString, minuteString] = timeString.split(':');
+        const hour = +hourString % 24;
+        return (hour % 12 || 12) + ':' + minuteString + (hour < 12 ? ' AM' : ' PM');
+    } else {
+        const [time, meridiem] = timeString.split(' ');
+        const [hour, minute] = time.split(':');
+        let changeHours = parseInt(hour)
+        if (meridiem === 'PM') {changeHours += 12}
+        return `${changeHours}:${minute}`;
+    }
 }
 
 function displayWeatherData(weatherJSON) {
@@ -20,6 +36,12 @@ function displayWeatherData(weatherJSON) {
 
     const currentTime = document.querySelector('.current-time');
     currentTime.textContent = convertLocalTime(weatherJSON.timezone);
+
+    const timeFormatBtn = document.querySelector('.time-format');
+    timeFormatBtn.style.display = 'block';
+    timeFormatBtn.addEventListener('click', () => {
+        currentTime.textContent = changeTimeFormat(currentTime.textContent);
+    });
 }
 
 async function getCurrentWeatherData(lat, lon) {
