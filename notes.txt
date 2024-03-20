@@ -1,0 +1,10 @@
+Get all weather icons - day and night mode:
+Clear Sky
+Few Clouds
+Scattered Clouds
+Broken Clouds
+Shower Rain
+Rain
+Thunderstorm
+Snow
+Mist
