@@ -1,5 +1,5 @@
 const input = document.querySelector('input');
-const search = document.querySelector('button');
+const search = document.querySelector('form button');
 
 const APIKEY = "b27c46842b98db969dffe3b1226f126f";
 // Needs to make it env for this API Key
@@ -14,8 +14,10 @@ function convertLocalTime(timezone) {
 function displayWeatherData(weatherJSON) {
     const currentWeather = document.querySelector('.current-weather');
     currentWeather.textContent = weatherJSON.weather[0].description;
+
     const currentLocation = document.querySelector('.current-location');
-    currentLocation.textContent = input.value;
+    currentLocation.textContent = `${input.value}, ${weatherJSON.sys.country}`;
+
     const currentTime = document.querySelector('.current-time');
     currentTime.textContent = convertLocalTime(weatherJSON.timezone);
 }
