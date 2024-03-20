@@ -4,13 +4,18 @@ const search = document.querySelector('button');
 const APIKEY = "b27c46842b98db969dffe3b1226f126f";
 // Needs to make it env for this API Key
 
+function convertTime(unix_dt) {
+    const date = new Date(unix_dt * 1000);
+    return date.getHours() + ':' + date.getMinutes();
+}
+
 function displayWeatherData(weatherJSON) {
     const currentWeather = document.querySelector('.current-weather');
     currentWeather.textContent = weatherJSON.weather[0].description;
     const currentLocation = document.querySelector('.current-location');
     currentLocation.textContent = input.value;
     const currentTime = document.querySelector('.current-time');
-    currentTime.textContent = weatherJSON.dt;
+    currentTime.textContent = convertTime(weatherJSON.dt);
 }
 
 async function getCurrentWeatherData(lat, lon) {
