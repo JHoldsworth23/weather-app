@@ -42,6 +42,9 @@ function displayWeatherData(weatherJSON) {
     timeFormatBtn.addEventListener('click', () => {
         currentTime.textContent = changeTimeFormat(currentTime.textContent);
     });
+
+    const currentTemp = document.querySelector('.current-temp');
+    currentTemp.textContent = `${Math.floor(weatherJSON.main.temp)} °C`;
 }
 
 async function getCurrentWeatherData(lat, lon) {
