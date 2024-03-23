@@ -1,8 +1,9 @@
 const input = document.querySelector('input');
-const search = document.querySelector('form button');
+const search = document.querySelector('.search');
 
-const APIKEY = "b27c46842b98db969dffe3b1226f126f";
+const APIKEY = 'b27c46842b98db969dffe3b1226f126f';
 let twelveHours = false;
+let fahrenheit = false;
 // Needs to make it env for this API Key
 
 function convertLocalTime(timezone) {
@@ -27,6 +28,13 @@ function changeTimeFormat(timeString) {
     }
 }
 
+function changeTempFormat(tempString, celsius) {
+    fahrenheit = !fahrenheit;
+    return fahrenheit 
+      ? Math.floor((tempString.split(' ')[0] * 9/5) + 32) + ' °F' 
+      : celsius + ' °C';
+}
+
 function displayWeatherData(weatherJSON) {
     const currentWeather = document.querySelector('.current-weather');
     currentWeather.textContent = weatherJSON.weather[0].description;
@@ -44,7 +52,16 @@ function displayWeatherData(weatherJSON) {
     });
 
     const currentTemp = document.querySelector('.current-temp');
-    currentTemp.textContent = `${Math.floor(weatherJSON.main.temp)} °C`;
+    const celsius = Math.floor(weatherJSON.main.temp);
+    console.log(celsius);
+    currentTemp.textContent = celsius + ' °C';
+
+    const tempFormat = document.querySelector('.temp-format');
+    tempFormat.style.display = 'block';
+    tempFormat.addEventListener('click', () => {
+        currentTemp.textContent = changeTempFormat(currentTemp.textContent, celsius);
+        tempFormat.textContent = currentTemp.textContent.includes('C') ? 'Display °F' : 'Display °C';
+    })
 }
 
 async function getCurrentWeatherData(lat, lon) {
