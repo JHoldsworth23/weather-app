@@ -7,16 +7,17 @@
         <script src="script.js" defer></script>
     </head>
     <body>
-        <form>
-            <input type="text">
-            <button type="button">Search</button>
-        </form>
+        <div class="search-div">
+            <input type="text" id="location" name="location" autocomplete="off">
+            <button type="button" class="search">Search</button>
+        </div>
         <div class="current-info">
             <h1 class="current-weather"></h1>
             <h2 class="current-location"></h1>
             <p class="current-time"></p>
             <button class="time-format" style="display: none;">Change the time format</button>
             <h2 class="current-temp"></h2>
+            <button class="temp-format" style="display: none;">Display °F</button>
         </div>
     </body>
 </html>
