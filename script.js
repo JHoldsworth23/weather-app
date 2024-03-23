@@ -90,4 +90,11 @@ search.addEventListener('click', () => {
         .catch((err) => console.error('Error:', err));
 });
 
+document.body.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        getCoordinates(input.value)
+          .catch((err) => console.error('Error:', err));
+    }
+});
+
 // JSON Online Viewer
