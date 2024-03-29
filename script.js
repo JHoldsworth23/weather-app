@@ -99,6 +99,27 @@ async function getCurrentWeatherData(lat, lon) {
     displayWeatherData(weatherData);
 }
 
+function displayWeatherForecast(forecastJSON) {
+    const dayForecast = forecastJSON.slice(0, 8);
+    console.log('day forecast:');
+    console.log(dayForecast);
+    const fiveDaysForecast = forecastJSON.filter((obj, index) => {
+        if (index % 8 == 0) return obj;
+    });
+    console.log('5 days forecast:');
+    console.log(fiveDaysForecast);
+}
+
+async function getWeatherForecast(lat, lon) {
+    const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`,
+        { mode: 'cors'}
+    );
+    const weatherForecastData = await response.json();
+    // console.log(weatherForecastData.list);
+    displayWeatherForecast(weatherForecastData.list);
+}
+
 async function getCoordinates(location) {
     const response = await fetch(
         `http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${APIKEY}`, 
@@ -106,8 +127,9 @@ async function getCoordinates(location) {
     );
     const coordinateData = await response.json();
     const { lat, lon } = coordinateData[0];
-    // console.log(`City: ${location} \nLatitude: ${lat} \nLongitude: ${lon} \nCountry: ${country}`);
-    getCurrentWeatherData(lat, lon);
+
+    // getCurrentWeatherData(lat, lon);
+    getWeatherForecast(lat, lon);
 }
 
 search.addEventListener('click', () => {
