@@ -35,6 +35,11 @@ function changeTempFormat(tempString, celsius) {
       : celsius + ' °C';
 }
 
+function dayOrNight(now, dawn, dusk) {
+    const currentDay = document.querySelector('.current-day');
+    (now >= dawn && now <= dusk) ? currentDay.textContent = 'DAY' : currentDay.textContent = 'NIGHT';
+}
+
 function displayWeatherData(weatherJSON) {
     const currentWeather = document.querySelector('.current-weather');
     currentWeather.textContent = weatherJSON.weather[0].description;
@@ -53,7 +58,6 @@ function displayWeatherData(weatherJSON) {
 
     const currentTemp = document.querySelector('.current-temp');
     const celsius = Math.floor(weatherJSON.main.temp);
-    console.log(celsius);
     currentTemp.textContent = celsius + ' °C';
 
     const tempFormat = document.querySelector('.temp-format');
@@ -61,7 +65,9 @@ function displayWeatherData(weatherJSON) {
     tempFormat.addEventListener('click', () => {
         currentTemp.textContent = changeTempFormat(currentTemp.textContent, celsius);
         tempFormat.textContent = currentTemp.textContent.includes('C') ? 'Display °F' : 'Display °C';
-    })
+    });
+
+    dayOrNight(weatherJSON.dt, weatherJSON.sys.sunrise, weatherJSON.sys.sunset);
 }
 
 async function getCurrentWeatherData(lat, lon) {
