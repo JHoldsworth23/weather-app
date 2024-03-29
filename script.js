@@ -1,7 +1,8 @@
 const input = document.querySelector('input');
 const search = document.querySelector('.search');
 
-const APIKEY = 'b27c46842b98db969dffe3b1226f126f';
+const openWeatherAPI = 'b27c46842b98db969dffe3b1226f126f';
+const weatherAPI = 'dcb884b7c7f4487cbca185100242903'
 let twelveHours = false;
 let imperial = false;
 // Needs to make it env for this API Key
@@ -50,7 +51,7 @@ function displayWeatherData(weatherJSON) {
     currentWeather.textContent = weatherJSON.weather[0].description;
 
     const currentLocation = document.querySelector('.current-location');
-    currentLocation.textContent = `${input.value}, ${weatherJSON.sys.country}`;
+    currentLocation.textContent = `${input.value}`;
 
     const currentTime = document.querySelector('.current-time');
     currentTime.textContent = convertLocalTime(weatherJSON.timezone);
@@ -91,7 +92,7 @@ function displayWeatherData(weatherJSON) {
 
 async function getCurrentWeatherData(lat, lon) {
     const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`, 
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${openWeatherAPI}&units=metric`, 
         {mode: 'cors'}
     );
     const weatherData = await response.json();
@@ -100,29 +101,27 @@ async function getCurrentWeatherData(lat, lon) {
 }
 
 function displayWeatherForecast(forecastJSON) {
-    const dayForecast = forecastJSON.slice(0, 8);
-    console.log('day forecast:');
+    const currentDT = Math.floor(Date.now() / 1000);
+    const dayForecast = forecastJSON[0].hour
+      .concat(forecastJSON[1].hour)
+      .filter(obj => {if (currentDT < obj.time_epoch) return obj})
+      .slice(0, 25);
     console.log(dayForecast);
-    const fiveDaysForecast = forecastJSON.filter((obj, index) => {
-        if (index % 8 == 0) return obj;
-    });
-    console.log('5 days forecast:');
-    console.log(fiveDaysForecast);
 }
 
 async function getWeatherForecast(lat, lon) {
     const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIKEY}&units=metric`,
+        `https://api.weatherapi.com/v1/forecast.json?key=${weatherAPI}&q=${lat},${lon}&days=8`,
         { mode: 'cors'}
     );
     const weatherForecastData = await response.json();
-    // console.log(weatherForecastData.list);
-    displayWeatherForecast(weatherForecastData.list);
+    // console.log(weatherForecastData.forecast.forecastday);
+    displayWeatherForecast(weatherForecastData.forecast.forecastday);
 }
 
 async function getCoordinates(location) {
     const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${APIKEY}`, 
+        `http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${openWeatherAPI}`, 
         {mode: 'cors'}
     );
     const coordinateData = await response.json();
