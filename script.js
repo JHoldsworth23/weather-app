@@ -3,7 +3,7 @@ const search = document.querySelector('.search');
 
 const APIKEY = 'b27c46842b98db969dffe3b1226f126f';
 let twelveHours = false;
-let fahrenheit = false;
+let imperial = false;
 // Needs to make it env for this API Key
 
 function convertLocalTime(timezone) {
@@ -28,11 +28,16 @@ function changeTimeFormat(timeString) {
     }
 }
 
-function changeTempFormat(tempString, celsius) {
-    fahrenheit = !fahrenheit;
-    return fahrenheit 
-      ? Math.floor((tempString.split(' ')[0] * 9/5) + 32) + ' °F' 
-      : celsius + ' °C';
+function changeTempFormat(celsius) {
+    return imperial 
+      ? Math.floor((celsius * 9/5) + 32) + ' °' 
+      : celsius + ' °';
+}
+
+function changeWindUnit(speedKPH) {
+    return imperial 
+      ? Math.round(speedKPH * 6.21371) / 10 + ' mph' 
+      : speedKPH + ' kph';
 }
 
 function dayOrNight(now, dawn, dusk) {
@@ -58,16 +63,30 @@ function displayWeatherData(weatherJSON) {
 
     const currentTemp = document.querySelector('.current-temp');
     const celsius = Math.floor(weatherJSON.main.temp);
-    currentTemp.textContent = celsius + ' °C';
+    currentTemp.textContent = celsius + ' °';
+
+    const feelsTemp = document.querySelector('.feels-temp');
+    const feelsLikeCelsius = Math.floor(weatherJSON.main.feels_like);
+    feelsTemp.textContent = feelsLikeCelsius + ' °';
+
+    const windSpeed = document.querySelector('.wind');
+    const speedKPH = Math.round(weatherJSON.wind.speed * 36) / 10;
+    windSpeed.textContent = `${speedKPH} kph`;
 
     const tempFormat = document.querySelector('.temp-format');
     tempFormat.style.display = 'block';
     tempFormat.addEventListener('click', () => {
-        currentTemp.textContent = changeTempFormat(currentTemp.textContent, celsius);
-        tempFormat.textContent = currentTemp.textContent.includes('C') ? 'Display °F' : 'Display °C';
+        imperial = !imperial;
+        currentTemp.textContent = changeTempFormat(celsius);
+        feelsTemp.textContent = changeTempFormat(feelsLikeCelsius);
+        windSpeed.textContent = changeWindUnit(speedKPH);
+        tempFormat.textContent = imperial ? 'Display °C' : 'Display °F';
     });
 
     dayOrNight(weatherJSON.dt, weatherJSON.sys.sunrise, weatherJSON.sys.sunset);
+
+    const humidity = document.querySelector('.humidity');
+    humidity.textContent = `${weatherJSON.main.humidity}%`;
 }
 
 async function getCurrentWeatherData(lat, lon) {
