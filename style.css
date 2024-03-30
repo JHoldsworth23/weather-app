@@ -1,0 +1,32 @@
+body {
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    background-image: url('/image/background/desert-dune.jpg');
+    background-size: cover;
+}
+
+.search-div {
+    text-align: right;
+}
+
+.search-div + div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 50px;
+}
+
+img {
+    background-color: black;
+    border-radius: 50%;
+    padding: 20px;
+    width: 60px;
+    height: auto;
+}
+
+.week-forecast {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+}
