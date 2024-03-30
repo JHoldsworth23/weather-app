@@ -100,13 +100,37 @@ async function getCurrentWeatherData(lat, lon) {
     displayWeatherData(weatherData);
 }
 
+function displayWeekForecast(weekForecastJSON) {
+    const weekDiv = document.querySelector('.week-forecast');
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    weekForecastJSON.forEach((dayForecast) => {
+        const day = new Date(dayForecast.date);
+        const div = document.createElement('div');
+        div.innerHTML = `
+            <h2>${dayNames[day.getDay()]}</h2>
+            <p>${Math.floor(dayForecast.day.avgtemp_c)}</p>
+            <p>${Math.floor(dayForecast.day.mintemp_c)}</p>
+            <h3>${dayForecast.day.condition.text}</h3>
+        `;
+        weekDiv.appendChild(div);
+    });
+}
+
 function displayWeatherForecast(forecastJSON) {
     const currentDT = Math.floor(Date.now() / 1000);
     const dayForecast = forecastJSON[0].hour
       .concat(forecastJSON[1].hour)
       .filter(obj => {if (currentDT < obj.time_epoch) return obj})
-      .slice(0, 25);
+      .slice(0, 24);
+       
+    console.log('DAY FORECAST:');
     console.log(dayForecast);
+
+    const weekForecastBtn = document.querySelector('.week-forecast-btn');
+    weekForecastBtn.addEventListener('click', () => {
+        displayWeekForecast(forecastJSON.slice(1, 8));
+    });
 }
 
 async function getWeatherForecast(lat, lon) {
@@ -115,7 +139,7 @@ async function getWeatherForecast(lat, lon) {
         { mode: 'cors'}
     );
     const weatherForecastData = await response.json();
-    // console.log(weatherForecastData.forecast.forecastday);
+
     displayWeatherForecast(weatherForecastData.forecast.forecastday);
 }
 
