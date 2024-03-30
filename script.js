@@ -43,7 +43,9 @@ function changeWindUnit(speedKPH) {
 
 function dayOrNight(now, dawn, dusk) {
     const currentDay = document.querySelector('.current-day');
-    (now >= dawn && now <= dusk) ? currentDay.textContent = 'DAY' : currentDay.textContent = 'NIGHT';
+    (now >= dawn && now <= dusk) 
+      ? currentDay.innerHTML = '<img src="/image/weather-png/day_clear.png" alt="daytime">' 
+      : currentDay.innerHTML = '<img src="/image/weather-png/night_clear.png" alt="nighttime">';
 }
 
 function displayWeatherData(weatherJSON) {
@@ -152,8 +154,8 @@ async function getCoordinates(location) {
     const coordinateData = await response.json();
     const { lat, lon } = coordinateData[0];
 
-    // getCurrentWeatherData(lat, lon);
-    getWeatherForecast(lat, lon);
+    getCurrentWeatherData(lat, lon);
+    // getWeatherForecast(lat, lon);
 }
 
 search.addEventListener('click', () => {
