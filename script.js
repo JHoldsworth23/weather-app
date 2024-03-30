@@ -102,6 +102,7 @@ async function getCurrentWeatherData(lat, lon) {
 
 function displayWeekForecast(weekForecastJSON) {
     const weekDiv = document.querySelector('.week-forecast');
+    weekDiv.textContent = '';
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     weekForecastJSON.forEach((dayForecast) => {
