@@ -4,10 +4,38 @@ body {
     max-height: 100vh;
     background-image: url('/image/background/desert-dune.jpg');
     background-size: cover;
+    margin: 7vh 5vw;
 }
 
 .search-div {
     text-align: right;
+}
+
+#location {
+    appearance: none;
+    background: transparent;
+    padding: 4px 8px;
+    border: none;
+    border-bottom: 2px solid #000000;
+    font-size: 1.2rem;
+}
+
+#location:focus {
+    outline: none;
+    background-color: #FEFEFE;
+    border-radius: 4px 4px 0 0;
+}
+
+.search {
+    font-size: 1.4rem;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    margin-left: -4px;
+}
+
+.search:hover {
+    color: #5f5a5a;
 }
 
 .search-div + div {
