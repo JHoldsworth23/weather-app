@@ -53,6 +53,13 @@ body {
     margin: 0 50px;
 }
 
+.current-info {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    color: #FEFEFE;
+    border-radius: 16px;
+}
+
 .current-info p {
     margin: 8px 0;
 }
@@ -92,7 +99,7 @@ body {
     padding: 20px;
     width: 60px;
     height: auto;
-    margin: 16px 0;
+    margin-top: 16px;
 }
 
 /* WEATHER FORECAST */
