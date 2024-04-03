@@ -1,12 +1,19 @@
+@font-face {
+    font-family: 'urbanist';
+    src: url('/fonts/Urbanist-Regular.ttf') format('truetype');
+}
+
 body {
     display: flex;
     flex-direction: column;
     max-height: 100vh;
+    font-family: 'urbanist';
     background-image: url('/image/background/desert-dune.jpg');
     background-size: cover;
     margin: 7vh 5vw;
 }
 
+/* SEARCH */
 .search-div {
     text-align: right;
 }
@@ -38,6 +45,7 @@ body {
     color: #5f5a5a;
 }
 
+/* CURRENT WEATHER INFO */
 .search-div + div {
     display: flex;
     justify-content: space-between;
@@ -53,6 +61,7 @@ img {
     height: auto;
 }
 
+/* WEATHER FORECAST */
 .week-forecast {
     display: flex;
     justify-content: space-evenly;
