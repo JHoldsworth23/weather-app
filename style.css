@@ -109,10 +109,10 @@ body {
 .current-info > img {
     display: block;
     filter: brightness(0) invert(1);
-    padding: 20px;
+    padding: 10px;
     width: 75px;
     height: auto;
-    margin-top: 16px;
+    margin: auto;
 }
 
 /* MORE DETAILS WEATHER */
