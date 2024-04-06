@@ -102,6 +102,10 @@ body {
     cursor: pointer;
 }
 
+.current-time + button:hover, .current-temp + button:hover {
+    background-color: #cf1a1a;
+}
+
 .current-temp {
     font-size: 3.4rem;
 }
@@ -156,6 +160,29 @@ body {
 }
 
 /* WEATHER FORECAST */
+button[class*="forecast-btn"] {
+    appearance: none;
+    border: 3px solid transparent;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #FEFEFE;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 1.2px;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin: 0 8px;
+}
+
+button[class*="forecast-btn"]:hover {
+    border: 3px solid #FEFEFE;
+    border-radius: 12px;
+}
+
+button.active {
+    border: 3px solid #FEFEFE;
+    border-radius: 12px;
+}
+
 .week-forecast {
     display: flex;
     justify-content: space-evenly;
