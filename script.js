@@ -1,6 +1,17 @@
 const input = document.querySelector('input');
 const search = document.querySelector('.search');
 
+const currentTime = document.querySelector('.current-time');
+const timeFormatBtn = document.querySelector('.time-format');
+const currentTemp = document.querySelector('.current-temp');
+const feelsTemp = document.querySelector('.feels-temp');
+const windSpeed = document.querySelector('.wind');
+const tempFormat = document.querySelector('.temp-format');
+
+let celsius;
+let feelsLikeCelsius;
+let speedKPH;
+
 const openWeatherAPI = 'b27c46842b98db969dffe3b1226f126f';
 const weatherAPI = 'dcb884b7c7f4487cbca185100242903'
 let twelveHours = false;
@@ -30,16 +41,16 @@ function changeTimeFormat(timeString) {
     }
 }
 
-function changeTempFormat(celsius) {
+function changeTempFormat(temp) {
     return imperial 
-      ? Math.floor((celsius * 9/5) + 32) + ' °F' 
-      : celsius + ' °C';
+      ? Math.floor((temp * 9/5) + 32) + ' °F' 
+      : temp + ' °C';
 }
 
-function changeWindUnit(speedKPH) {
+function changeWindUnit(speed) {
     return imperial 
-      ? Math.round(speedKPH * 6.21371) / 10 + ' mph' 
-      : speedKPH + ' kph';
+      ? Math.round(speed * 6.21371) / 10 + ' mph' 
+      : speed + ' kph';
 }
 
 function displayWeatherData(weatherJSON) {
@@ -49,36 +60,16 @@ function displayWeatherData(weatherJSON) {
     const currentLocation = document.querySelector('.current-location');
     currentLocation.textContent = `${input.value}`;
 
-    const currentTime = document.querySelector('.current-time');
     currentTime.textContent = convertLocalTime(weatherJSON.timezone);
 
-    const timeFormatBtn = document.querySelector('.time-format');
-    timeFormatBtn.style.display = 'block';
-    timeFormatBtn.addEventListener('click', () => {
-        currentTime.textContent = changeTimeFormat(currentTime.textContent);
-    });
-
-    const currentTemp = document.querySelector('.current-temp');
-    const celsius = Math.floor(weatherJSON.main.temp);
+    celsius = Math.floor(weatherJSON.main.temp);
     currentTemp.textContent = celsius + ' °C';
 
-    const feelsTemp = document.querySelector('.feels-temp');
-    const feelsLikeCelsius = Math.floor(weatherJSON.main.feels_like);
+    feelsLikeCelsius = Math.floor(weatherJSON.main.feels_like);
     feelsTemp.textContent = feelsLikeCelsius + ' °C';
 
-    const windSpeed = document.querySelector('.wind');
-    const speedKPH = Math.round(weatherJSON.wind.speed * 36) / 10;
+    speedKPH = Math.round(weatherJSON.wind.speed * 36) / 10;
     windSpeed.textContent = `${speedKPH} kph`;
-
-    const tempFormat = document.querySelector('.temp-format');
-    tempFormat.style.display = 'block';
-    tempFormat.addEventListener('click', () => {
-        imperial = !imperial;
-        currentTemp.textContent = changeTempFormat(celsius);
-        feelsTemp.textContent = changeTempFormat(feelsLikeCelsius);
-        windSpeed.textContent = changeWindUnit(speedKPH);
-        tempFormat.textContent = imperial ? 'Display °C' : 'Display °F';
-    });
 
     const humidity = document.querySelector('.humidity');
     humidity.textContent = `${weatherJSON.main.humidity}%`;
@@ -90,7 +81,7 @@ async function getCurrentWeatherData(lat, lon) {
         {mode: 'cors'}
     );
     const weatherData = await response.json();
-    console.log(weatherData);
+    // console.log(weatherData);
     displayWeatherData(weatherData);
 }
 
@@ -160,6 +151,18 @@ document.body.addEventListener('keypress', (e) => {
         getCoordinates(input.value)
           .catch((err) => console.error('Error:', err));
     }
+});
+
+timeFormatBtn.addEventListener('click', () => {
+    currentTime.textContent = changeTimeFormat(currentTime.textContent);
+});
+
+tempFormat.addEventListener('click', () => {
+    imperial = !imperial;
+    currentTemp.textContent = changeTempFormat(celsius);
+    feelsTemp.textContent = changeTempFormat(feelsLikeCelsius);
+    windSpeed.textContent = changeWindUnit(speedKPH);
+    tempFormat.textContent = imperial ? 'Display °C' : 'Display °F';
 });
 
 // JSON Online Viewer
