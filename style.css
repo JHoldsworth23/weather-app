@@ -75,6 +75,7 @@ body {
 .current-location {
     font-size: 1.75rem;
     margin-bottom: 0 !important;
+    text-transform: capitalize;
 }
 
 .current-info > div {
