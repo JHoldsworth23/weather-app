@@ -37,7 +37,7 @@ function changeTimeFormat(timeString) {
         const [hour, minute] = time.split(':');
         let changeHours = parseInt(hour)
         if (meridiem === 'PM') {changeHours += 12}
-        return `${changeHours}:${minute}`;
+        return `${('0' + changeHours).slice(-2)}:${minute}`;
     }
 }
 
