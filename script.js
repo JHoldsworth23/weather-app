@@ -85,17 +85,14 @@ async function getCurrentWeatherData(lat, lon) {
     displayWeatherData(weatherData);
 }
 
-function displayWeekForecast(weekForecastJSON) {
+function displayWeekForecast(weekForecastJSON, fiveDaysForecast) {
     const interval = 8;
     const weekForecastArr = [];
     for (let i = 7; i < weekForecastJSON.list.length; i=i+interval) {
         weekForecastArr.push(weekForecastJSON.list[i]);
     }
 
-    const fiveDaysForecast = document.querySelector('.week-forecast');
-    fiveDaysForecast.textContent = '';
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
     weekForecastArr.forEach((dayForecast) => {
         const day = new Date(dayForecast.dt_txt.split(' ')[0]);
 
@@ -107,8 +104,6 @@ function displayWeekForecast(weekForecastJSON) {
         `;
         fiveDaysForecast.appendChild(dayDiv);
     });
-
-    console.log(weekForecastArr);
 }
 
 function displayWeatherForecast(hourlyForecastJSON, weekForecastJSON) {
@@ -125,10 +120,16 @@ function displayWeatherForecast(hourlyForecastJSON, weekForecastJSON) {
     const precipitation = document.querySelector('.precipitation');
     precipitation.textContent = `${chanceOfRain}%`;
 
-    const fiveDaysForecast = document.querySelector('.week-forecast-btn');
-    fiveDaysForecast.addEventListener('click', (e) => {
-        e.stopPropagation();
-        displayWeekForecast(weekForecastJSON);
+    const weekForecastBtn = document.querySelector('.week-forecast-btn');
+    const weekForecastDiv = document.querySelector('.week-forecast');
+
+    const dayForecastBtn = document.querySelector('.day-forecast-btn');
+    const dayForecastDiv = document.querySelector('.day-forecast');
+
+    weekForecastBtn.addEventListener('click', (e) => {
+        dayForecastDiv.textContent = '';
+        weekForecastDiv.textContent = '';
+        displayWeekForecast(weekForecastJSON, weekForecastDiv);
     })
 }
 
