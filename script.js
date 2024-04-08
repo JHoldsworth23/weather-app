@@ -117,6 +117,12 @@ function displayHourForecast(hourlyForecastJSON, dayForecastDiv) {
     });
 }
 
+function activateButton(button) {
+    const activeBtn = document.querySelector('.active');
+    activeBtn.classList.remove('active');
+    button.classList.add('active');
+}
+
 function displayWeatherForecast(hourlyForecastJSON, weekForecastJSON) {
     const currentDT = Math.floor(Date.now() / 1000);
     const dayForecastJSON = hourlyForecastJSON[0].hour
@@ -135,18 +141,20 @@ function displayWeatherForecast(hourlyForecastJSON, weekForecastJSON) {
     const dayForecastDiv = document.querySelector('.day-forecast');
 
     weekForecastBtn.addEventListener('click', () => {
+        activateButton(weekForecastBtn);
         dayForecastDiv.textContent = '';
         weekForecastDiv.textContent = '';
         displayWeekForecast(weekForecastJSON, weekForecastDiv);
     });
 
-    console.log(dayForecastJSON);
-
     dayForecastBtn.addEventListener('click', () => {
+        activateButton(dayForecastBtn);
         dayForecastDiv.textContent = '';
         weekForecastDiv.textContent = '';
         displayHourForecast(dayForecastJSON, dayForecastDiv);
     });
+
+    displayWeekForecast(weekForecastJSON, weekForecastDiv);
 }
 
 async function getWeatherForecast(lat, lon) {
