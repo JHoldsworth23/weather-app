@@ -106,17 +106,25 @@ function displayWeekForecast(weekForecastJSON, fiveDaysForecast) {
     });
 }
 
+function displayHourForecast(hourlyForecastJSON, dayForecastDiv) {
+    hourlyForecastJSON.forEach((obj) => {
+        const hourDiv = document.createElement('div');
+        hourDiv.innerHTML = `
+            <p class="hour">${obj.time.split(" ")[1]}</p>
+            <p class="hour-forecast-temp">${Math.floor(obj.temp_c)} °C</p>
+        `;
+        dayForecastDiv.appendChild(hourDiv);
+    });
+}
+
 function displayWeatherForecast(hourlyForecastJSON, weekForecastJSON) {
     const currentDT = Math.floor(Date.now() / 1000);
-    const dayForecast = hourlyForecastJSON[0].hour
+    const dayForecastJSON = hourlyForecastJSON[0].hour
       .concat(hourlyForecastJSON[1].hour)
       .filter(obj => {if (currentDT < obj.time_epoch) return obj})
       .slice(0, 24);
-    
-    // console.log('HOURLY FORECAST:');
-    // console.log(dayForecast);
 
-    const chanceOfRain = dayForecast[0].chance_of_rain;
+    const chanceOfRain = dayForecastJSON[0].chance_of_rain;
     const precipitation = document.querySelector('.precipitation');
     precipitation.textContent = `${chanceOfRain}%`;
 
@@ -126,11 +134,19 @@ function displayWeatherForecast(hourlyForecastJSON, weekForecastJSON) {
     const dayForecastBtn = document.querySelector('.day-forecast-btn');
     const dayForecastDiv = document.querySelector('.day-forecast');
 
-    weekForecastBtn.addEventListener('click', (e) => {
+    weekForecastBtn.addEventListener('click', () => {
         dayForecastDiv.textContent = '';
         weekForecastDiv.textContent = '';
         displayWeekForecast(weekForecastJSON, weekForecastDiv);
-    })
+    });
+
+    console.log(dayForecastJSON);
+
+    dayForecastBtn.addEventListener('click', () => {
+        dayForecastDiv.textContent = '';
+        weekForecastDiv.textContent = '';
+        displayHourForecast(dayForecastJSON, dayForecastDiv);
+    });
 }
 
 async function getWeatherForecast(lat, lon) {
@@ -186,5 +202,3 @@ tempFormat.addEventListener('click', () => {
     windSpeed.textContent = changeWindUnit(speedKPH);
     tempFormat.textContent = imperial ? 'Display °C' : 'Display °F';
 });
-
-// JSON Online Viewer
