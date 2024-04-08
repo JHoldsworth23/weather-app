@@ -11,7 +11,7 @@ body {
     font-family: 'urbanist';
     background-image: url('/image/background/desert-dune.jpg');
     background-size: cover;
-    margin: 7vh 15vw;
+    margin: 5vh 15vw;
 }
 
 /* SEARCH */
@@ -184,14 +184,16 @@ button.active {
     border: 3px solid #FEFEFE;
 }
 
-.week-forecast {
+/* WEEK FORECAST */
+.week-forecast, .day-forecast {
     display: flex;
     justify-content: space-evenly;
     align-items: flex-end;
     gap: 20px;
+    overflow-x: auto;
 }
 
-.week-forecast > div {
+.week-forecast > div, .day-forecast > div {
     width: 170px;
     height: 180px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -201,7 +203,11 @@ button.active {
     padding: 14px 20px 0;
 }
 
-.day {
+.day-forecast > div {
+    min-width: 110px;
+}
+
+.day, .hour {
     font-size: 1.4rem;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -209,7 +215,11 @@ button.active {
     margin: 0;
 }
 
-.day + img {
+.hour {
+    font-size: 1.7rem !important;
+}
+
+.day + img, .hour + img {
     display: block;
     width: 60px;
     height: auto;
@@ -220,6 +230,12 @@ button.active {
 .forecast-temp {
     font-size: 2rem;
     margin: 4px 20px;
+}
+
+.hour-forecast-temp {
+    font-size: 2rem;
+    text-align: center;
+    margin: 4px 0;
 }
 
 .forecast-temp + p {
