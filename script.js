@@ -92,6 +92,22 @@ function displayWeekForecast(weekForecastJSON) {
         weekForecastArr.push(weekForecastJSON.list[i]);
     }
 
+    const fiveDaysForecast = document.querySelector('.week-forecast');
+    fiveDaysForecast.textContent = '';
+    const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    weekForecastArr.forEach((dayForecast) => {
+        const day = new Date(dayForecast.dt_txt.split(' ')[0]);
+
+        const dayDiv = document.createElement('div');
+        dayDiv.innerHTML = `
+            <p class="day">${dayNames[day.getDay()]}</p>
+            <p class="forecast-temp">${Math.floor(dayForecast.main.temp)} °C</p>
+            <p>${Math.floor(dayForecast.main.feels_like)} °C</p>
+        `;
+        fiveDaysForecast.appendChild(dayDiv);
+    });
+
     console.log(weekForecastArr);
 }
 
@@ -124,7 +140,7 @@ async function getWeatherForecast(lat, lon) {
     const dayForecastData = await weatherApiResponse.json();
 
     const openWeatherApiResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${openWeatherAPI}`,
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${openWeatherAPI}&units=metric`,
         { mode: 'cors' }
     );
     const weekForecastJSON = await openWeatherApiResponse.json();
@@ -143,6 +159,8 @@ async function getCoordinates(location) {
     getCurrentWeatherData(lat, lon);
     getWeatherForecast(lat, lon);
 }
+
+getCoordinates('Leeds');
 
 search.addEventListener('click', () => {
     getCoordinates(input.value)
