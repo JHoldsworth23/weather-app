@@ -16,14 +16,22 @@
         <div>
             <div class="current-info">
                 <p class="current-weather"></p>
-                <!-- <img src="/image/weather-png/night_clear.png" alt="current weather"> -->
+                <img>
                 <p class="current-location"></p>
                 <div>
                     <p class="current-time"></p>
                     <button class="time-format"><i class="fa-regular fa-clock"></i> <i class="fa-solid fa-repeat"></i> <i class="fa-solid fa-clock"></i></button>
                 </div>
-                <p class="current-temp"></p>
-                <button class="temp-format">Display °F</button>
+                <div>
+                    <div>
+                        <p class="current-temp"></p>
+                        <button class="temp-format">Display °F</button>
+                    </div>
+                    <div class="current-wind-dir">
+                        <p class="wind-direction">Wind Direction</p>
+                        <p class="wind-arrow"><i class="fa-solid fa-arrow-up-long"></i></p>
+                    </div>
+                </div>
             </div>
             <div class="more-details">
                 <div>
@@ -39,7 +47,7 @@
                 <div>
                     <i class="fa-solid fa-cloud-showers-heavy"></i>
                     <p>Chance of Rain</p>
-                    <p class="preception"></p>
+                    <p class="precipitation"></p>
                 </div>
                 <div>
                     <i class="fa-solid fa-hand-holding-droplet"></i>
@@ -49,9 +57,9 @@
             </div>
         </div>
         <div class="forecast-div">
-            <button class="week-forecast-btn">Daily</button>
+            <button class="week-forecast-btn active">Daily</button>
             <button class="day-forecast-btn">Hourly</button>
-            <div class="day-forecast" style="display: none;"></div>
+            <div class="day-forecast"></div>
             <div class="week-forecast"></div>
         </div>
     </body>
