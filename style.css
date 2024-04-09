@@ -216,7 +216,7 @@ button.active {
 }
 
 .hour {
-    font-size: 1.7rem !important;
+    font-size: 1.4rem !important;
 }
 
 .day + img, .hour + img {

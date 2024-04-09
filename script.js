@@ -31,7 +31,6 @@ function convertLocalTime(timezone) {
 }
 
 function changeTimeFormat(timeString) {
-    twelveHours = !twelveHours;
     if (twelveHours) {
         const [hourString, minuteString] = timeString.split(':');
         const hour = +hourString % 24;
@@ -126,10 +125,11 @@ function displayHourForecast(hourlyForecastJSON, dayForecastDiv) {
 
     hourlyForecastJSON.forEach((obj) => {
         const hourDiv = document.createElement('div');
+        const time = changeTimeFormat(obj.time.split(" ")[1]);
         const forecastTemp = changeTempFormat(Math.floor(obj.temp_c));
 
         hourDiv.innerHTML = `
-            <p class="hour">${obj.time.split(" ")[1]}</p>
+            <p class="hour">${time}</p>
             <p class="hour-forecast-temp">${forecastTemp}</p>
         `;
         dayForecastDiv.appendChild(hourDiv);
@@ -172,6 +172,10 @@ function displayWeatherForecast(hourlyForecastJSON, weekForecastJSON) {
         weekForecastDiv.textContent = '';
         displayHourForecast(dayForecastJSON, dayForecastDiv);
     });
+
+    timeFormatBtn.addEventListener('click', () => {
+        if (dayForecastDiv.textContent) displayHourForecast(dayForecastJSON, dayForecastDiv);
+    })
 
     tempFormat.addEventListener('click', () => {
         if (dayForecastDiv.textContent) {
@@ -227,6 +231,7 @@ document.body.addEventListener('keypress', (e) => {
 });
 
 timeFormatBtn.addEventListener('click', () => {
+    twelveHours = !twelveHours;
     currentTime.textContent = changeTimeFormat(currentTime.textContent);
 });
 
