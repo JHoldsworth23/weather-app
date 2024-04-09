@@ -73,6 +73,9 @@ function displayWeatherData(weatherJSON) {
     celsius = Math.floor(weatherJSON.main.temp);
     currentTemp.textContent = celsius + ' °C';
 
+    const windDirection = document.querySelector('.wind-arrow');
+    windDirection.style.transform = `rotate(${weatherJSON.wind.deg}deg)`;
+
     feelsLikeCelsius = Math.floor(weatherJSON.main.feels_like);
     feelsTemp.textContent = feelsLikeCelsius + ' °C';
 
@@ -180,14 +183,13 @@ function displayWeatherForecast(hourlyForecastJSON, weekForecastJSON) {
     })
 
     tempFormat.addEventListener('click', () => {
-        if (dayForecastDiv.textContent) {
-            displayHourForecast(dayForecastJSON, dayForecastDiv)
-        } else {
-            displayWeekForecast(weekForecastJSON, weekForecastDiv);
-        }
+        dayForecastDiv.textContent ? displayHourForecast(dayForecastJSON, dayForecastDiv) : displayWeekForecast(weekForecastJSON, weekForecastDiv);
     });
 
-    displayWeekForecast(weekForecastJSON, weekForecastDiv);
+    const weekOrDayForecast = document.querySelector('.active');
+    weekOrDayForecast.classList.contains('week-forecast-btn') 
+      ? displayWeekForecast(weekForecastJSON, weekForecastDiv) 
+      : displayHourForecast(dayForecastJSON, dayForecastDiv);
 }
 
 async function getWeatherForecast(lat, lon) {
