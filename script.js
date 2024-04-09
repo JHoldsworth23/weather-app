@@ -16,7 +16,6 @@ const openWeatherAPI = 'b27c46842b98db969dffe3b1226f126f';
 const weatherAPI = 'dcb884b7c7f4487cbca185100242903'
 let twelveHours = false;
 let imperial = false;
-// Needs to make it env for this API Key
 
 function dayOrNight(dt, dawn, dusk) {
     return (dt > dawn && dt < dusk) ? "day" : "night";
@@ -60,7 +59,6 @@ function displayWeatherData(weatherJSON) {
     const currentWeather = document.querySelector('.current-weather');
     currentWeather.textContent = weatherJSON.weather[0].description;
 
-    console.log(weatherJSON);
     const weatherIcon = document.querySelector('.current-weather + img');
     weatherIcon.src = `
         image/weather-png/${dayOrNight(weatherJSON.dt, weatherJSON.sys.sunrise, weatherJSON.sys.sunset)}_${weatherJSON.weather[0].main.toLowerCase()}.png
@@ -68,7 +66,7 @@ function displayWeatherData(weatherJSON) {
     weatherIcon.alt = weatherJSON.weather[0].main;
 
     const currentLocation = document.querySelector('.current-location');
-    currentLocation.textContent = `${input.value}`;
+    currentLocation.textContent = `${input.value}` || 'London';
 
     currentTime.textContent = convertLocalTime(weatherJSON.timezone);
 
@@ -107,12 +105,14 @@ function displayWeekForecast(weekForecastJSON, fiveDaysForecast) {
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     weekForecastArr.forEach((dayForecast) => {
         const day = new Date(dayForecast.dt_txt.split(' ')[0]);
+        const weather = dayForecast.weather[0];
         const forecastTemp = changeTempFormat(Math.floor(dayForecast.main.temp));
         const forecastTempFeelsLike = changeTempFormat(Math.floor(dayForecast.main.feels_like));
 
         const dayDiv = document.createElement('div');
         dayDiv.innerHTML = `
             <p class="day">${dayNames[day.getDay()]}</p>
+            <img src="https://openweathermap.org/img/wn/${weather.icon}@2x.png" alt="${weather.description}">
             <p class="forecast-temp">${forecastTemp}</p>
             <p>${forecastTempFeelsLike}</p>
         `;
@@ -126,10 +126,12 @@ function displayHourForecast(hourlyForecastJSON, dayForecastDiv) {
     hourlyForecastJSON.forEach((obj) => {
         const hourDiv = document.createElement('div');
         const time = changeTimeFormat(obj.time.split(" ")[1]);
+        const weather = obj.condition;
         const forecastTemp = changeTempFormat(Math.floor(obj.temp_c));
 
         hourDiv.innerHTML = `
             <p class="hour">${time}</p>
+            <img src="${weather.icon}" alt="${weather.text}">
             <p class="hour-forecast-temp">${forecastTemp}</p>
         `;
         dayForecastDiv.appendChild(hourDiv);
@@ -216,7 +218,7 @@ async function getCoordinates(location) {
     getWeatherForecast(lat, lon);
 }
 
-getCoordinates('Leeds');
+getCoordinates('London');
 
 search.addEventListener('click', () => {
     getCoordinates(input.value)
