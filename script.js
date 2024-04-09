@@ -86,6 +86,8 @@ async function getCurrentWeatherData(lat, lon) {
 }
 
 function displayWeekForecast(weekForecastJSON, fiveDaysForecast) {
+    fiveDaysForecast.textContent = '';
+
     const interval = 8;
     const weekForecastArr = [];
     for (let i = 7; i < weekForecastJSON.list.length; i=i+interval) {
@@ -95,23 +97,29 @@ function displayWeekForecast(weekForecastJSON, fiveDaysForecast) {
     const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     weekForecastArr.forEach((dayForecast) => {
         const day = new Date(dayForecast.dt_txt.split(' ')[0]);
+        const forecastTemp = changeTempFormat(Math.floor(dayForecast.main.temp));
+        const forecastTempFeelsLike = changeTempFormat(Math.floor(dayForecast.main.feels_like));
 
         const dayDiv = document.createElement('div');
         dayDiv.innerHTML = `
             <p class="day">${dayNames[day.getDay()]}</p>
-            <p class="forecast-temp">${Math.floor(dayForecast.main.temp)} °C</p>
-            <p>${Math.floor(dayForecast.main.feels_like)} °C</p>
+            <p class="forecast-temp">${forecastTemp}</p>
+            <p>${forecastTempFeelsLike}</p>
         `;
         fiveDaysForecast.appendChild(dayDiv);
     });
 }
 
 function displayHourForecast(hourlyForecastJSON, dayForecastDiv) {
+    dayForecastDiv.textContent = '';
+
     hourlyForecastJSON.forEach((obj) => {
         const hourDiv = document.createElement('div');
+        const forecastTemp = changeTempFormat(Math.floor(obj.temp_c));
+
         hourDiv.innerHTML = `
             <p class="hour">${obj.time.split(" ")[1]}</p>
-            <p class="hour-forecast-temp">${Math.floor(obj.temp_c)} °C</p>
+            <p class="hour-forecast-temp">${forecastTemp}</p>
         `;
         dayForecastDiv.appendChild(hourDiv);
     });
@@ -140,18 +148,26 @@ function displayWeatherForecast(hourlyForecastJSON, weekForecastJSON) {
     const dayForecastBtn = document.querySelector('.day-forecast-btn');
     const dayForecastDiv = document.querySelector('.day-forecast');
 
+    weekForecastDiv.textContent = '';
+
     weekForecastBtn.addEventListener('click', () => {
         activateButton(weekForecastBtn);
         dayForecastDiv.textContent = '';
-        weekForecastDiv.textContent = '';
         displayWeekForecast(weekForecastJSON, weekForecastDiv);
     });
 
     dayForecastBtn.addEventListener('click', () => {
         activateButton(dayForecastBtn);
-        dayForecastDiv.textContent = '';
         weekForecastDiv.textContent = '';
         displayHourForecast(dayForecastJSON, dayForecastDiv);
+    });
+
+    tempFormat.addEventListener('click', () => {
+        if (dayForecastDiv.textContent) {
+            displayHourForecast(dayForecastJSON, dayForecastDiv)
+        } else {
+            displayWeekForecast(weekForecastJSON, weekForecastDiv);
+        }
     });
 
     displayWeekForecast(weekForecastJSON, weekForecastDiv);
