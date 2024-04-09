@@ -18,6 +18,10 @@ let twelveHours = false;
 let imperial = false;
 // Needs to make it env for this API Key
 
+function dayOrNight(dt, dawn, dusk) {
+    return (dt > dawn && dt < dusk) ? "day" : "night";
+}
+
 function convertLocalTime(timezone) {
     const unix = Math.floor(Date.now() / 1000);
     const utc_ms = (parseInt(unix, 10) + parseInt(timezone, 10)) * 1000;
@@ -56,6 +60,13 @@ function changeWindUnit(speed) {
 function displayWeatherData(weatherJSON) {
     const currentWeather = document.querySelector('.current-weather');
     currentWeather.textContent = weatherJSON.weather[0].description;
+
+    console.log(weatherJSON);
+    const weatherIcon = document.querySelector('.current-weather + img');
+    weatherIcon.src = `
+        image/weather-png/${dayOrNight(weatherJSON.dt, weatherJSON.sys.sunrise, weatherJSON.sys.sunset)}_${weatherJSON.weather[0].main.toLowerCase()}.png
+    `;
+    weatherIcon.alt = weatherJSON.weather[0].main;
 
     const currentLocation = document.querySelector('.current-location');
     currentLocation.textContent = `${input.value}`;
