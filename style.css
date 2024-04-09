@@ -120,6 +120,19 @@ body {
     margin: auto;
 }
 
+.current-wind-dir {
+    margin: 16px 0 0;
+}
+
+.wind-direction {
+    font-size: 1.4rem;
+}
+
+.wind-arrow {
+    font-size: 3.2rem;
+    text-align: center;
+}
+
 /* MORE DETAILS WEATHER */
 .more-details {
     background-color: rgba(0, 0, 0, 0.3);
