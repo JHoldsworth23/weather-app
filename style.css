@@ -276,3 +276,32 @@ button.active {
     border: solid 2px transparent;
     border-radius: 8px;
 }
+
+/* FOOTER SECTION */
+footer {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #FEFEFE;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 100vw;
+    font-size: 18px;
+}
+
+.copyright {
+    margin: 12px 0;
+}
+
+i[class$="hub"] {
+    color: #5f5a5a;
+    font-size: 24px;
+}
+
+i[class$="hub"]:hover {
+    color: #FEFEFE;
+    font-size: 24px;
+}

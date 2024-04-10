@@ -246,3 +246,7 @@ tempFormat.addEventListener('click', () => {
     windSpeed.textContent = changeWindUnit(speedKPH);
     tempFormat.textContent = imperial ? 'Display °C' : 'Display °F';
 });
+
+const copyright = document.querySelector('.copyright');
+const date = new Date();
+copyright.textContent = `Copyright ©️ ${date.getFullYear()} JHoldsworth23`;
