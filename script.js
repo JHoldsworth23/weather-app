@@ -227,7 +227,7 @@ function checkInput() {
     if (input.value == '') {
         error.textContent = 'You need to enter a location.';
     } else if (!isNaN(input.value)) {
-        error.textContent = 'Search value needs to be a location - not a number';
+        error.textContent = 'Search value needs to be a location - not a number.';
     } else {
         return true;
     }
@@ -271,5 +271,3 @@ tempFormat.addEventListener('click', () => {
 const copyright = document.querySelector('.copyright');
 const date = new Date();
 copyright.textContent = `Copyright ©️ ${date.getFullYear()} JHoldsworth23`;
-
-// REGEX - ^[a-zA-Z]*$

@@ -6,7 +6,7 @@
 body {
     display: flex;
     flex-direction: column;
-    gap: 6vh;
+    gap: 4vh;
     max-height: 100vh;
     font-family: 'urbanist';
     background-image: url('/image/background/desert-dune.jpg');
@@ -17,6 +17,7 @@ body {
 /* SEARCH */
 .search-div {
     text-align: right;
+    flex-wrap: wrap;
 }
 
 #location {
@@ -44,6 +45,15 @@ body {
 
 .search:hover {
     color: #5f5a5a;
+}
+
+#error-message {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: #cf1a1a;
+    margin: 4px 35px 0 0;
 }
 
 /* CURRENT WEATHER INFO */
