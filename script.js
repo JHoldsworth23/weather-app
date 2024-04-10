@@ -8,6 +8,9 @@ const feelsTemp = document.querySelector('.feels-temp');
 const windSpeed = document.querySelector('.wind');
 const tempFormat = document.querySelector('.temp-format');
 
+const form = document.querySelector('.search-div');
+const error = document.getElementById('error-message');
+
 let celsius;
 let feelsLikeCelsius;
 let speedKPH;
@@ -220,17 +223,35 @@ async function getCoordinates(location) {
     getWeatherForecast(lat, lon);
 }
 
+function checkInput() {
+    if (input.value == '') {
+        error.textContent = 'You need to enter a location.';
+    } else if (!isNaN(input.value)) {
+        error.textContent = 'Search value needs to be a location - not a number';
+    } else {
+        return true;
+    }
+    form.appendChild(error);
+    return;
+}
+
 getCoordinates('London');
 
 search.addEventListener('click', () => {
-    getCoordinates(input.value)
-        .catch((err) => console.error('Error:', err));
+    if (checkInput()) {
+        error.textContent = '';
+        getCoordinates(input.value)
+          .catch(() => {error.textContent = 'Location not found. Please try again.'});
+    }
 });
 
 document.body.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        getCoordinates(input.value)
-          .catch((err) => console.error('Error:', err));
+        if (checkInput()) {
+            error.textContent = '';
+            getCoordinates(input.value)
+                .catch(() => {error.textContent = 'Location not found. Please try again.'});
+        }
     }
 });
 
@@ -250,3 +271,5 @@ tempFormat.addEventListener('click', () => {
 const copyright = document.querySelector('.copyright');
 const date = new Date();
 copyright.textContent = `Copyright ©️ ${date.getFullYear()} JHoldsworth23`;
+
+// REGEX - ^[a-zA-Z]*$
