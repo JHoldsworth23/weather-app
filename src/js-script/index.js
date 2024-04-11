@@ -1,10 +1,8 @@
-import { getCurrentWeatherData, currentTemp, currentTime, feelsTemp, windSpeed } from "./current_weather";
+import { getCurrentWeatherData, currentTemp, currentTime, feelsTemp, windSpeed, celsius, feelsLikeCelsius, speedKPH } from "./current_weather";
 import { getWeatherForecast } from "./weather_forecast";
 import { checkInput, error } from "./form";
 import gitHubFooter from "./footer";
 import "../style.css";
-
-// import currentTemp and currentTime
 
 const openWeatherAPI = 'b27c46842b98db969dffe3b1226f126f';
 
@@ -13,10 +11,6 @@ const search = document.querySelector('.search');
 
 const timeFormatBtn = document.querySelector('.time-format');
 const tempFormat = document.querySelector('.temp-format');
-
-let celsius = '';
-let feelsLikeCelsius = '';
-let speedKPH = '';
 
 let twelveHours = false;
 let imperial = false;
@@ -99,9 +93,6 @@ export {
     input,
     timeFormatBtn,
     tempFormat, 
-    celsius, 
-    feelsLikeCelsius, 
-    speedKPH,
     changeTimeFormat,
     changeTempFormat
 };

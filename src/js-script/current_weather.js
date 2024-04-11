@@ -1,9 +1,13 @@
-import { openWeatherAPI, input, celsius, feelsLikeCelsius, speedKPH } from "./index";
+import { openWeatherAPI, input } from "./index";
 
 const currentTime = document.querySelector('.current-time');
 const currentTemp = document.querySelector('.current-temp');
 const feelsTemp = document.querySelector('.feels-temp');
 const windSpeed = document.querySelector('.wind');
+
+let celsius;
+let feelsLikeCelsius;
+let speedKPH;
 
 function dayOrNight(dt, dawn, dusk) {
     return (dt > dawn && dt < dusk) ? "day" : "night";
@@ -56,4 +60,13 @@ async function getCurrentWeatherData(lat, lon) {
     displayWeatherData(weatherData);
 }
 
-export {getCurrentWeatherData, currentTemp, currentTime, feelsTemp, windSpeed};
+export {
+    getCurrentWeatherData, 
+    currentTemp, 
+    currentTime, 
+    feelsTemp, 
+    windSpeed,
+    celsius,
+    feelsLikeCelsius,
+    speedKPH
+};
