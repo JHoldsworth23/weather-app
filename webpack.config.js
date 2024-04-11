@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
     mode: 'development',
     devtool: 'inline-source-map',
-    entry: './src/script.js',
+    entry: '/src/js-script/index.js',
     output: {
         filename: 'main.js',
         path: path.resolve(__dirname, 'dist'),
@@ -16,11 +16,11 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg)$/,
-                use: 'asset/resource',
+                type: 'asset/resource',
             },
             {
                 test: /\.ttf$/,
-                use: 'asset/resource',
+                type: 'asset/resource',
             }
         ],
     },
