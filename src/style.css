@@ -1,6 +1,12 @@
 @font-face {
     font-family: 'urbanist';
-    src: url('/fonts/Urbanist-Regular.ttf') format('truetype');
+    src: url('./fonts/Urbanist-Regular.ttf') format('truetype');
+}
+
+:root {
+    --main-color: #FEFEFE;
+    --crimson-color: #CF1A1A;
+    --background: rgba(0, 0, 0, 0.3);
 }
 
 body {
@@ -9,12 +15,11 @@ body {
     gap: 4vh;
     max-height: 100vh;
     font-family: 'urbanist';
-    background-image: url('/image/background/desert-dune.jpg');
+    background-image: url('./image/background/desert-dune.jpg');
     background-size: cover;
     margin: 5vh 15vw;
 }
 
-/* SEARCH */
 .search-div {
     text-align: right;
     flex-wrap: wrap;
@@ -31,7 +36,7 @@ body {
 
 #location:focus {
     outline: none;
-    background-color: #FEFEFE;
+    background-color: var(--main-color);
     border-radius: 4px 4px 0 0;
 }
 
@@ -52,11 +57,10 @@ body {
     font-size: 1.1rem;
     font-weight: 600;
     letter-spacing: 1.2px;
-    color: #cf1a1a;
+    color: var(--crimson-color);
     margin: 4px 35px 0 0;
 }
 
-/* CURRENT WEATHER INFO */
 .search-div + div {
     display: flex;
     justify-content: space-between;
@@ -65,9 +69,9 @@ body {
 }
 
 .current-info {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: var(--background);
     padding: 30px 20px;
-    color: #FEFEFE;
+    color: var(--main-color);
     border-radius: 16px;
 }
 
@@ -102,7 +106,7 @@ body {
 
 .current-time + button, .current-temp + button {
     background-color: rgba(0, 89, 255, 0.28);
-    color: #FEFEFE;
+    color: var(--main-color);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 600;
@@ -114,7 +118,7 @@ body {
 }
 
 .current-time + button:hover, .current-temp + button:hover {
-    background-color: #cf1a1a;
+    background-color: var(--crimson-color);
 }
 
 .current-temp {
@@ -143,11 +147,10 @@ body {
     text-align: center;
 }
 
-/* MORE DETAILS WEATHER */
 .more-details {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: var(--background);
     padding: 10px 30px;
-    color: #FEFEFE;
+    color: var(--main-color);
     border-radius: 16px;
 }
 
@@ -183,12 +186,11 @@ body {
     letter-spacing: 1.2px;
 }
 
-/* WEATHER FORECAST */
 button[class*="forecast-btn"] {
     appearance: none;
     border: 3px solid transparent;
     background-color: rgba(0, 0, 0, 0.5);
-    color: #FEFEFE;
+    color: var(--main-color);
     font-weight: 600;
     font-size: 1.1rem;
     letter-spacing: 1.2px;
@@ -199,15 +201,14 @@ button[class*="forecast-btn"] {
 }
 
 button[class*="forecast-btn"]:hover {
-    border: 3px solid #FEFEFE;
+    border: 3px solid var(--main-color);
     border-radius: 12px;
 }
 
 button.active {
-    border: 3px solid #FEFEFE;
+    border: 3px solid var(--main-color);
 }
 
-/* WEEK FORECAST */
 .week-forecast, .day-forecast {
     display: flex;
     justify-content: space-evenly;
@@ -220,7 +221,7 @@ button.active {
     width: 170px;
     min-height: 180px;
     background-color: rgba(0, 0, 0, 0.5);
-    color: #FEFEFE;
+    color: var(--main-color);
     border-radius: 12px;
     letter-spacing: 1.2px;
     padding: 14px 20px 0;
@@ -265,7 +266,6 @@ button.active {
     margin: 0 20px 10px;
 }
 
-/* SCROLL BAR */
 .day-forecast::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 14px 14px #5f5a5a;
     border: 4px solid transparent;
@@ -274,7 +274,7 @@ button.active {
 }
 
 .day-forecast::-webkit-scrollbar-thumb:hover {
-    box-shadow: inset 0 0 14px 14px #cf1a1a;
+    box-shadow: inset 0 0 14px 14px var(--crimson-color);
 }
 
 .day-forecast::-webkit-scrollbar {
@@ -282,15 +282,14 @@ button.active {
 }
 
 .day-forecast::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 10px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: inset 0 0 10px 10px var(--background);
     border: solid 2px transparent;
     border-radius: 8px;
 }
 
-/* FOOTER SECTION */
 footer {
     background-color: rgba(0, 0, 0, 0.5);
-    color: #FEFEFE;
+    color: var(--main-color);
     position: fixed;
     bottom: 0;
     left: 0;
@@ -312,6 +311,6 @@ i[class$="hub"] {
 }
 
 i[class$="hub"]:hover {
-    color: #FEFEFE;
+    color: var(--main-color);
     font-size: 24px;
 }
