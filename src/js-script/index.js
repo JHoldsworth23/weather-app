@@ -15,7 +15,7 @@ const tempFormat = document.querySelector('.temp-format');
 let twelveHours = false;
 let imperial = false;
 
-function changeTimeFormat(timeString) {
+function checkTimeFormat(timeString) {
     if (twelveHours) {
         const [hourString, minuteString] = timeString.split(':');
         const hour = +hourString % 24;
@@ -29,13 +29,13 @@ function changeTimeFormat(timeString) {
     }
 }
 
-function changeTempFormat(temp) {
+function checkTempFormat(temp) {
     return imperial 
       ? Math.floor((temp * 9/5) + 32) + ' °F' 
       : temp + ' °C';
 }
 
-function changeWindUnit(speed) {
+function checkWindUnit(speed) {
     return imperial 
       ? Math.round(speed * 6.21371) / 10 + ' mph' 
       : speed + ' kph';
@@ -75,14 +75,14 @@ document.body.addEventListener('keypress', (e) => {
 
 timeFormatBtn.addEventListener('click', () => {
     twelveHours = !twelveHours;
-    currentTime.textContent = changeTimeFormat(currentTime.textContent);
+    currentTime.textContent = checkTimeFormat(currentTime.textContent);
 });
 
 tempFormat.addEventListener('click', () => {
     imperial = !imperial;
-    currentTemp.textContent = changeTempFormat(celsius);
-    feelsTemp.textContent = changeTempFormat(feelsLikeCelsius);
-    windSpeed.textContent = changeWindUnit(speedKPH);
+    currentTemp.textContent = checkTempFormat(celsius);
+    feelsTemp.textContent = checkTempFormat(feelsLikeCelsius);
+    windSpeed.textContent = checkWindUnit(speedKPH);
     tempFormat.textContent = imperial ? 'Display °C' : 'Display °F';
 });
 
@@ -93,6 +93,7 @@ export {
     input,
     timeFormatBtn,
     tempFormat, 
-    changeTimeFormat,
-    changeTempFormat
+    checkTimeFormat,
+    checkTempFormat,
+    checkWindUnit,
 };

@@ -1,4 +1,4 @@
-import { changeTempFormat } from "./index";
+import { checkTempFormat } from "./index";
 
 function displayWeekForecast(weekForecastJSON, fiveDaysForecast) {
     fiveDaysForecast.textContent = '';
@@ -13,8 +13,8 @@ function displayWeekForecast(weekForecastJSON, fiveDaysForecast) {
     weekForecastArr.forEach((dayForecast) => {
         const day = new Date(dayForecast.dt_txt.split(' ')[0]);
         const weather = dayForecast.weather[0];
-        const forecastTemp = changeTempFormat(Math.floor(dayForecast.main.temp));
-        const forecastTempFeelsLike = changeTempFormat(Math.floor(dayForecast.main.feels_like));
+        const forecastTemp = checkTempFormat(Math.floor(dayForecast.main.temp));
+        const forecastTempFeelsLike = checkTempFormat(Math.floor(dayForecast.main.feels_like));
 
         const dayDiv = document.createElement('div');
         dayDiv.innerHTML = `

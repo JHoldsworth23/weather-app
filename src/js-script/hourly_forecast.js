@@ -1,13 +1,13 @@
-import { changeTimeFormat, changeTempFormat } from "./index";
+import { checkTimeFormat, checkTempFormat } from "./index";
 
 function displayHourForecast(hourlyForecastJSON, dayForecastDiv) {
     dayForecastDiv.textContent = '';
 
     hourlyForecastJSON.forEach((obj) => {
         const hourDiv = document.createElement('div');
-        const time = changeTimeFormat(obj.time.split(" ")[1]);
+        const time = checkTimeFormat(obj.time.split(" ")[1]);
         const weather = obj.condition;
-        const forecastTemp = changeTempFormat(Math.floor(obj.temp_c));
+        const forecastTemp = checkTempFormat(Math.floor(obj.temp_c));
 
         hourDiv.innerHTML = `
             <p class="hour">${time}</p>

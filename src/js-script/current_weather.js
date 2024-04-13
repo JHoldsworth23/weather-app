@@ -1,4 +1,4 @@
-import { openWeatherAPI, input } from "./index";
+import { openWeatherAPI, input, checkTempFormat, checkTimeFormat, checkWindUnit } from "./index";
 
 const currentTime = document.querySelector('.current-time');
 const currentTemp = document.querySelector('.current-temp');
@@ -32,19 +32,19 @@ function displayWeatherData(weatherJSON) {
     const currentLocation = document.querySelector('.current-location');
     currentLocation.textContent = `${input.value}` || 'London';
 
-    currentTime.textContent = convertLocalTime(weatherJSON.timezone);
+    currentTime.textContent = checkTimeFormat(convertLocalTime(weatherJSON.timezone));
 
     celsius = Math.floor(weatherJSON.main.temp);
-    currentTemp.textContent = celsius + ' °C';
+    currentTemp.textContent = checkTempFormat(celsius);
 
     const windDirection = document.querySelector('.wind-arrow');
     windDirection.style.transform = `rotate(${weatherJSON.wind.deg}deg)`;
 
     feelsLikeCelsius = Math.floor(weatherJSON.main.feels_like);
-    feelsTemp.textContent = feelsLikeCelsius + ' °C';
+    feelsTemp.textContent = checkTempFormat(feelsLikeCelsius);
 
     speedKPH = Math.round(weatherJSON.wind.speed * 36) / 10;
-    windSpeed.textContent = `${speedKPH} kph`;
+    windSpeed.textContent = checkWindUnit(speedKPH);
 
     const humidity = document.querySelector('.humidity');
     humidity.textContent = `${weatherJSON.main.humidity}%`;
