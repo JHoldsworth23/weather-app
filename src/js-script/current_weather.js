@@ -27,7 +27,7 @@ function displayWeatherData(weatherJSON) {
 
     const weatherIcon = document.querySelector('.current-weather + img');
     weatherIcon.src = `./image/weather-png/${dayOrNight(weatherJSON.dt, weatherJSON.sys.sunrise, weatherJSON.sys.sunset)}_${weatherJSON.weather[0].main.toLowerCase()}.png`;
-    weatherIcon.alt = weatherJSON.weather[0].main;
+    weatherIcon.alt = weatherJSON.weather[0].description;
 
     const currentLocation = document.querySelector('.current-location');
     currentLocation.textContent = `${input.value}` || 'London';
