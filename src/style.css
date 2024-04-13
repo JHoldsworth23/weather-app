@@ -88,7 +88,7 @@ body {
 
 .current-location {
     font-size: 1.75rem;
-    margin-bottom: 0 !important;
+    margin-bottom: 2px !important;
     text-transform: capitalize;
 }
 
@@ -248,6 +248,10 @@ button.active {
     width: 80px;
     height: auto;
     margin: auto;
+}
+
+img[src*="13"] {
+    filter: invert(44%) sepia(96%) saturate(1785%) hue-rotate(162deg) brightness(95%) contrast(101%);
 }
 
 .forecast-temp {
